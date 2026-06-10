@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MT5 Guide">
+<meta name="theme-color" content="#0d0d0d">
+<title>MT5 Trading Guide</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:#0d0d0d;color:#f5f5f5;font-family:system-ui,-apple-system,sans-serif;font-size:13px;min-height:100vh;overscroll-behavior:none;-webkit-text-size-adjust:100%}
+.app{max-width:430px;margin:0 auto;background:#0d0d0d;min-height:100vh;padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+.topbar{background:#0d0d0d;border-bottom:1px solid #1e1e1e;padding:calc(env(safe-area-inset-top,12px) + 10px) 12px 8px;position:sticky;top:0;z-index:50}
+.tb-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.tb-logo{display:flex;align-items:center;gap:8px}
+.tb-icon{width:30px;height:30px;background:#00e5a0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#000;letter-spacing:-.5px}
+.tb-title{font-size:15px;font-weight:600;color:#f5f5f5}
+.tb-badge{font-size:10px;color:#00e5a0;background:rgba(0,229,160,.1);border:1px solid rgba(0,229,160,.2);padding:2px 8px;border-radius:20px}
+.pb-row{display:flex;justify-content:space-between;margin-bottom:4px}
+.pb-l{font-size:10px;color:#888}
+.pb-v{font-size:10px;font-weight:600;color:#00e5a0}
+.pb-track{height:3px;background:#1e1e1e;border-radius:99px;overflow:hidden}
+.pb-fill{height:100%;background:#00e5a0;border-radius:99px;transition:width .5s ease;width:0%}
+.sc{display:none;padding:8px 8px 0;animation:fu .2s ease}
+.sc.on{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
+.sbox{background:#161616;border:1px solid #1e1e1e;border-radius:10px;padding:10px 12px}
+.sbox-v{font-size:22px;font-weight:700;color:#00e5a0}
+.sbox-l{font-size:10px;color:#888;margin-top:1px}
+.warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:9px 11px;margin-bottom:6px;font-size:11px;color:#f59e0b;line-height:1.5}
+.qa-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
+.qa{background:#161616;border:1px solid #1e1e1e;border-radius:10px;padding:11px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;-webkit-appearance:none;border:1px solid #1e1e1e;transition:all .12s}
+.qa:active{transform:scale(.97);background:#1e1e1e}
+.qa-i{font-size:20px}
+.qa-l{font-size:10px;color:#888;font-weight:500;text-align:center}
+.ph-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:#00e5a0;background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.15);padding:3px 8px;border-radius:20px;margin:8px 0 5px}
+.gc{background:#161616;border:1px solid #1e1e1e;border-radius:10px;overflow:hidden;margin-bottom:5px}
+.gc-h{display:flex;align-items:center;gap:10px;padding:11px 12px;cursor:pointer}
+.gc-h:active{background:#1e1e1e}
+.gc-ico{width:34px;height:34px;border-radius:8px;background:#1e1e1e;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.gc-inf{flex:1}
+.gc-t{font-size:13px;font-weight:600;color:#f5f5f5}
+.gc-s{font-size:11px;color:#888;margin-top:1px}
+.gc-arr{font-size:12px;color:#444;transition:transform .2s}
+.gc.op .gc-arr{transform:rotate(180deg)}
+.gc.op{border-color:rgba(0,229,160,.2)}
+.gc-body{display:none;border-top:1px solid #1e1e1e}
+.gc.op .gc-body{display:block}
+.sr{display:flex;align-items:flex-start;gap:9px;padding:9px 12px;border-bottom:1px solid #1a1a1a}
+.sr:last-child{border-bottom:none}
+.scb{width:20px;height:20px;border-radius:5px;border:1.5px solid #333;background:transparent;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .15s;-webkit-appearance:none}
+.scb.dn{background:#00e5a0;border-color:#00e5a0}
+.scb.dn::after{content:'✓';font-size:11px;font-weight:800;color:#000}
+.sl{flex:1;font-size:12px;line-height:1.5;color:#e0e0e0;transition:color .2s}
+.sl.dn{color:#444;text-decoration:line-through}
+.stip{margin-top:6px;font-size:11px;color:#888;background:rgba(0,180,212,.06);border-left:2px solid rgba(0,188,212,.4);border-radius:0 5px 5px 0;padding:5px 9px;line-height:1.4}
+.clc{background:#161616;border:1px solid #1e1e1e;border-radius:10px;overflow:hidden;margin-bottom:5px}
+.clc-h{display:flex;align-items:center;gap:9px;padding:10px 12px;cursor:pointer}
+.clc-h:active{background:#1e1e1e}
+.cl-ic{font-size:16px}
+.cl-t{flex:1;font-size:13px;font-weight:600;color:#f5f5f5}
+.cl-pg{font-size:10px;color:#00e5a0;background:rgba(0,229,160,.08);padding:2px 7px;border-radius:8px;border:1px solid rgba(0,229,160,.15)}
+.cl-ar{font-size:12px;color:#444;transition:transform .2s}
+.clc.op .cl-ar{transform:rotate(180deg)}
+.clc.op{border-color:rgba(0,229,160,.15)}
+.clc-body{display:none;border-top:1px solid #1a1a1a}
+.clc.op .clc-body{display:block}
+.clr{display:flex;align-items:center;gap:9px;padding:9px 12px;border-bottom:1px solid #1a1a1a;cursor:pointer}
+.clr:last-child{border-bottom:none}
+.clr:active{background:#1a1a1a}
+.cl-ck{width:18px;height:18px;border-radius:50%;border:1.5px solid #333;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.cl-ck.dn{background:#00e5a0;border-color:#00e5a0}
+.cl-ck.dn::after{content:'✓';font-size:10px;color:#000;font-weight:800}
+.cl-tx{font-size:12px;color:#ccc;line-height:1.4;transition:color .2s}
+.cl-tx.dn{color:#3a3a3a;text-decoration:line-through}
+.tip{border-radius:10px;padding:10px 12px;display:flex;gap:10px;margin-bottom:5px;align-items:flex-start}
+.tip.d{background:rgba(255,77,77,.07);border:1px solid rgba(255,77,77,.18)}
+.tip.s{background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.15)}
+.tip.i{background:rgba(0,188,212,.07);border:1px solid rgba(0,188,212,.18)}
+.tip.w{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.18)}
+.tip-e{font-size:18px;flex-shrink:0}
+.tip-t{font-size:12px;font-weight:600;margin-bottom:3px}
+.tip.d .tip-t{color:#ff6b6b}
+.tip.s .tip-t{color:#00e5a0}
+.tip.i .tip-t{color:#00bcd4}
+.tip.w .tip-t{color:#f59e0b}
+.tip-d{font-size:11px;color:#888;line-height:1.5}
+.calc{background:#161616;border:1px solid rgba(0,229,160,.2);border-radius:10px;padding:12px;margin-bottom:6px}
+.calc-t{font-size:12px;font-weight:600;color:#f5f5f5;margin-bottom:10px}
+.calc-r{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.calc-r label{font-size:11px;color:#888}
+.calc-r input{background:#0d0d0d;border:1px solid #2a2a2a;border-radius:7px;padding:6px 9px;font-size:12px;color:#f5f5f5;width:100px;text-align:right;outline:none;-webkit-appearance:none;font-family:inherit}
+.calc-r input:focus{border-color:rgba(0,229,160,.4)}
+.calc-res{background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.15);border-radius:8px;padding:9px 12px;display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.calc-rl{font-size:11px;color:#888}
+.calc-rv{font-size:18px;font-weight:700;color:#00e5a0}
+.gl{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.gl-c{background:#161616;border:1px solid #1e1e1e;border-radius:9px;padding:9px 10px}
+.gl-t{font-size:12px;font-weight:600;color:#00bcd4;margin-bottom:3px}
+.gl-d{font-size:10px;color:#666;line-height:1.5}
+.sh{font-size:10px;font-weight:600;color:#444;text-transform:uppercase;letter-spacing:.07em;padding:8px 4px 4px}
+.nav{display:grid;grid-template-columns:repeat(5,1fr);background:#0d0d0d;border-top:1px solid #1a1a1a;padding:6px 0;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px));position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:100}
+.nv{display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 4px;cursor:pointer;border:none;background:none;-webkit-appearance:none;transition:all .12s}
+.nv-i{font-size:18px;transition:transform .15s}
+.nv-l{font-size:9px;color:#444;font-weight:500}
+.nv.on .nv-l{color:#00e5a0}
+.nv.on .nv-i{transform:scale(1.18)}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="topbar">
+  <div class="tb-row">
+    <div class="tb-logo">
+      <div class="tb-icon">MT5</div>
+      <div class="tb-title">Trading Guide</div>
+    </div>
+    <div class="tb-badge">Démo only</div>
+  </div>
+  <div class="pb-row"><div class="pb-l">Progression</div><div class="pb-v" id="pv">0 / 31</div></div>
+  <div class="pb-track"><div class="pb-fill" id="pf"></div></div>
+</div>
+
+<!-- ACCUEIL -->
+<div class="sc on" id="s-home">
+  <div class="stat-row">
+    <div class="sbox"><div class="sbox-v" id="sd">0</div><div class="sbox-l">étapes faites</div></div>
+    <div class="sbox"><div class="sbox-v" id="sp">0%</div><div class="sbox-l">complété</div></div>
+  </div>
+  <div class="warn">⚠️ Commence TOUJOURS en démo. 70-80% des traders particuliers perdent de l'argent. Minimum 2-3 mois de démo rentable avant le compte réel.</div>
+  <div class="sh">Navigation rapide</div>
+  <div class="qa-row">
+    <button class="qa" onclick="go('guide')"><div class="qa-i">📚</div><div class="qa-l">Guide 6 phases</div></button>
+    <button class="qa" onclick="go('cl')"><div class="qa-i">✅</div><div class="qa-l">Checklists</div></button>
+    <button class="qa" onclick="go('tips')"><div class="qa-i">💡</div><div class="qa-l">Règles d'or</div></button>
+    <button class="qa" onclick="go('gl')"><div class="qa-i">📖</div><div class="qa-l">Glossaire</div></button>
+  </div>
+  <div class="sh">Contenu de l'app</div>
+  <div class="gc"><div class="gc-body" style="display:block">
+    <div class="sr"><div style="flex:1;font-size:11px;color:#888;line-height:1.6">6 phases · 31 étapes cochables · 4 checklists · 8 règles d'or · calculateur de risque · 20 termes dans le glossaire. Progression sauvegardée automatiquement sur ton appareil.</div></div>
+  </div></div>
+</div>
+
+<!-- GUIDE -->
+<div class="sc" id="s-guide">
+  <div class="ph-tag">Phase 1 · Installation</div>
+  <div class="gc" id="gc1">
+    <div class="gc-h" onclick="tg('gc1')">
+      <div class="gc-ico">📱</div>
+      <div class="gc-inf"><div class="gc-t">Installation & compte démo</div><div class="gc-s">5 étapes pour démarrer</div></div>
+      <div class="gc-arr">▾</div>
+    </div>
+    <div class="gc-body">
+      <div class="sr"><button class="scb" onclick="ts(this,'a1')"></button><div class="sl" id="a1">App Store → chercher <strong style="color:#e0e0e0">MetaTrader 5</strong> — éditeur : MetaQuotes Software Corp.</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'a2')"></button><div class="sl" id="a2">Ouvrir MT5 → <strong style="color:#e0e0e0">"Ouvrir un compte"</strong> → <strong style="color:#e0e0e0">"Compte de démonstration"</strong><div class="stip">💡 Argent virtuel, conditions de marché 100% réelles.</div></div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'a3')"></button><div class="sl" id="a3">Choisir un broker : <strong style="color:#e0e0e0">Exness, Pepperstone, XM</strong> recommandés pour débuter</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'a4')"></button><div class="sl" id="a4">Sauvegarder <strong style="color:#e0e0e0">login, mot de passe et numéro de serveur</strong><div class="stip">📝 Sans ces infos, impossible de se reconnecter.</div></div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'a5')"></button><div class="sl" id="a5">Se connecter → vérifier que le solde démo apparaît (ex: 10 000 $)</div></div>
+    </div>
+  </div>
+  <div class="ph-tag">Phase 2 · Interface</div>
+  <div class="gc" id="gc2">
+    <div class="gc-h" onclick="tg('gc2')">
+      <div class="gc-ico">🧭</div>
+      <div class="gc-inf"><div class="gc-t">Naviguer dans MT5</div><div class="gc-s">Les 5 onglets du bas</div></div>
+      <div class="gc-arr">▾</div>
+    </div>
+    <div class="gc-body">
+      <div class="sr"><button class="scb" onclick="ts(this,'b1')"></button><div class="sl" id="b1"><strong style="color:#00bcd4">Cotations</strong> — liste des actifs (Forex, indices, crypto)</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'b2')"></button><div class="sl" id="b2"><strong style="color:#00bcd4">Graphiques</strong> — cours temps réel, appui long = outils de dessin</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'b3')"></button><div class="sl" id="b3"><strong style="color:#00bcd4">Trader</strong> — passer des ordres. Explorer Volume, SL, TP</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'b4')"></button><div class="sl" id="b4"><strong style="color:#00bcd4">Historique</strong> — trades passés, profits/pertes cumulés</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'b5')"></button><div class="sl" id="b5"><strong style="color:#00bcd4">Compte</strong> — Solde / Équité / Marge / Marge libre<div class="stip">Solde = capital sans positions · Équité = solde + P&L flottant · Marge = garantie bloquée</div></div></div>
+    </div>
+  </div>
+  <div class="ph-tag">Phase 3 · Graphiques</div>
+  <div class="gc" id="gc3">
+    <div class="gc-h" onclick="tg('gc3')">
+      <div class="gc-ico">📊</div>
+      <div class="gc-inf"><div class="gc-t">Lire les graphiques</div><div class="gc-s">Bougies, timeframes, tendances</div></div>
+      <div class="gc-arr">▾</div>
+    </div>
+    <div class="gc-body">
+      <div class="sr"><button class="scb" onclick="ts(this,'c1')"></button><div class="sl" id="c1">Bougie = corps (ouv→ferm) + mèches (hauts/bas)<div class="stip">🟢 Verte = prix monté · 🔴 Rouge = prix baissé</div></div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'c2')"></button><div class="sl" id="c2">Changer le timeframe (icône horloge) : H1 et D1 pour commencer<div class="stip">⏱ Évite M1/M5, trop nerveux pour débuter.</div></div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'c3')"></button><div class="sl" id="c3">Tendance haussière = hauts & bas ascendants · Baissière = descendants</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'c4')"></button><div class="sl" id="c4">Tracer supports & résistances sur les zones touchées plusieurs fois</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'c5')"></button><div class="sl" id="c5">Ajouter MA20 + MA50 : icône graphe → Indicateurs → Tendance → Moving Average<div class="stip">MA20 croise MA50 vers le haut = golden cross (signal haussier).</div></div></div>
+    </div>
+  </div>
+  <div class="ph-tag">Phase 4 · Premier ordre</div>
+  <div class="gc" id="gc4">
+    <div class="gc-h" onclick="tg('gc4')">
+      <div class="gc-ico">💼</div>
+      <div class="gc-inf"><div class="gc-t">Premier ordre en démo</div><div class="gc-s">Buy, Sell, SL, TP</div></div>
+      <div class="gc-arr">▾</div>
+    </div>
+    <div class="gc-body">
+      <div class="sr"><button class="scb" onclick="ts(this,'d1')"></button><div class="sl" id="d1">Cotations → EUR/USD → bouton <strong style="color:#e0e0e0">Trader</strong></div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'d2')"></button><div class="sl" id="d2">Volume à <strong style="color:#00e5a0">0.01 lot</strong> (minimum)<div class="stip">0.01 lot = ~0.10 $ par pip. Parfait pour s'entraîner.</div></div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'d3')"></button><div class="sl" id="d3">Définir un <strong style="color:#ff6b6b">Stop Loss</strong> avant de valider (ex: 20-30 pips)<div class="stip">🛑 JAMAIS de trade sans Stop Loss. Sans exception.</div></div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'d4')"></button><div class="sl" id="d4">Take Profit = minimum 2× le SL (ex: 40-60 pips)</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'d5')"></button><div class="sl" id="d5"><strong style="color:#00e5a0">Acheter</strong> si prix va monter · <strong style="color:#ff6b6b">Vendre</strong> si prix va baisser</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'d6')"></button><div class="sl" id="d6">Clôturer : Trader → appui long sur la position → Clôturer</div></div>
+    </div>
+  </div>
+  <div class="ph-tag">Phase 5 · Gestion du risque</div>
+  <div class="gc" id="gc5">
+    <div class="gc-h" onclick="tg('gc5')">
+      <div class="gc-ico">🛡️</div>
+      <div class="gc-inf"><div class="gc-t">Gestion du risque</div><div class="gc-s">La compétence n°1</div></div>
+      <div class="gc-arr">▾</div>
+    </div>
+    <div class="gc-body">
+      <div class="sr"><button class="scb" onclick="ts(this,'e1')"></button><div class="sl" id="e1">Règle des <strong style="color:#00e5a0">1-2%</strong> : risquer max 1-2% du capital par trade<div class="stip">1000 € de capital → max 10-20 € de risque par trade.</div></div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'e2')"></button><div class="sl" id="e2">Ratio <strong style="color:#00e5a0">R:R minimum 1:2</strong> : risquer 10 pour gagner 20<div class="stip">Avec 1:2, tu peux perdre 60% des trades et rester rentable.</div></div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'e3')"></button><div class="sl" id="e3">Ne jamais <strong style="color:#ff6b6b">revenge trader</strong> : pause 30 min après une perte</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'e4')"></button><div class="sl" id="e4">Journal de trading : noter chaque trade, raison, résultat, émotions</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'e5')"></button><div class="sl" id="e5">Perte journalière max -3% → stop immédiat pour la journée</div></div>
+    </div>
+  </div>
+  <div class="ph-tag">Phase 6 · Compte réel</div>
+  <div class="gc" id="gc6">
+    <div class="gc-h" onclick="tg('gc6')">
+      <div class="gc-ico">🚀</div>
+      <div class="gc-inf"><div class="gc-t">Devenir rentable & live</div><div class="gc-s">Stratégie, backtesting, réel</div></div>
+      <div class="gc-arr">▾</div>
+    </div>
+    <div class="gc-body">
+      <div class="sr"><button class="scb" onclick="ts(this,'f1')"></button><div class="sl" id="f1">1 seule stratégie à maîtriser : support/résistance, rebond sur MA, price action</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'f2')"></button><div class="sl" id="f2">Backtester en faisant défiler l'historique et simuler entrées/sorties</div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'f3')"></button><div class="sl" id="f3">Calendrier éco (Menu → Actualités) : éviter NFP, BCE, Fed, CPI<div class="stip">📅 Évite 30 min avant/après ces événements. Très volatil.</div></div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'f4')"></button><div class="sl" id="f4">Rentable en démo sur <strong style="color:#00e5a0">2-3 mois consécutifs</strong> minimum<div class="stip">Critère : 50+ trades, taux ≥40%, R:R ≥1:2 constants.</div></div></div>
+      <div class="sr"><button class="scb" onclick="ts(this,'f5')"></button><div class="sl" id="f5">Compte réel avec petit capital (100-500 €) chez broker régulé AMF/FCA</div></div>
+    </div>
+  </div>
+  <div style="height:8px"></div>
+</div>
+
+<!-- CHECKLIST -->
+<div class="sc" id="s-cl">
+  <div class="sh">Avant chaque session</div>
+  <div class="clc" id="cl1">
+    <div class="clc-h" onclick="tc('cl1')"><div class="cl-ic">🌅</div><div class="cl-t">Avant la session</div><div class="cl-pg" id="cl1p">0/7</div><div class="cl-ar">▾</div></div>
+    <div class="clc-body">
+      <div class="clr" onclick="tcl(this,'ca1','cl1')"><div class="cl-ck" id="ca1"></div><div class="cl-tx">Vérifier le calendrier économique du jour</div></div>
+      <div class="clr" onclick="tcl(this,'ca2','cl1')"><div class="cl-ck" id="ca2"></div><div class="cl-tx">Analyser la tendance sur D1 avant H1</div></div>
+      <div class="clr" onclick="tcl(this,'ca3','cl1')"><div class="cl-ck" id="ca3"></div><div class="cl-tx">Identifier les supports et résistances clés</div></div>
+      <div class="clr" onclick="tcl(this,'ca4','cl1')"><div class="cl-ck" id="ca4"></div><div class="cl-tx">Définir mon plan de trading du jour</div></div>
+      <div class="clr" onclick="tcl(this,'ca5','cl1')"><div class="cl-ck" id="ca5"></div><div class="cl-tx">Vérifier capital et marge disponible</div></div>
+      <div class="clr" onclick="tcl(this,'ca6','cl1')"><div class="cl-ck" id="ca6"></div><div class="cl-tx">Je ne suis pas fatigué, stressé ou sous pression</div></div>
+      <div class="clr" onclick="tcl(this,'ca7','cl1')"><div class="cl-ck" id="ca7"></div><div class="cl-tx">Fixer ma perte maximale du jour (ex: -3%)</div></div>
+    </div>
+  </div>
+  <div class="sh">Avant chaque trade</div>
+  <div class="clc" id="cl2">
+    <div class="clc-h" onclick="tc('cl2')"><div class="cl-ic">🎯</div><div class="cl-t">Avant le trade</div><div class="cl-pg" id="cl2p">0/6</div><div class="cl-ar">▾</div></div>
+    <div class="clc-body">
+      <div class="clr" onclick="tcl(this,'cb1','cl2')"><div class="cl-ck" id="cb1"></div><div class="cl-tx">Raison claire et précise d'entrer</div></div>
+      <div class="clr" onclick="tcl(this,'cb2','cl2')"><div class="cl-ck" id="cb2"></div><div class="cl-tx">Stop Loss défini avant d'entrer</div></div>
+      <div class="clr" onclick="tcl(this,'cb3','cl2')"><div class="cl-ck" id="cb3"></div><div class="cl-tx">Ratio R:R minimum 1:2</div></div>
+      <div class="clr" onclick="tcl(this,'cb4','cl2')"><div class="cl-ck" id="cb4"></div><div class="cl-tx">Taille de position respecte la règle 1-2%</div></div>
+      <div class="clr" onclick="tcl(this,'cb5','cl2')"><div class="cl-ck" id="cb5"></div><div class="cl-tx">Pas d'événement éco majeur dans 30 min</div></div>
+      <div class="clr" onclick="tcl(this,'cb6','cl2')"><div class="cl-ck" id="cb6"></div><div class="cl-tx">Pas de FOMO (peur de manquer une opportunité)</div></div>
+    </div>
+  </div>
+  <div class="sh">Après le trade</div>
+  <div class="clc" id="cl3">
+    <div class="clc-h" onclick="tc('cl3')"><div class="cl-ic">📝</div><div class="cl-t">Après le trade</div><div class="cl-pg" id="cl3p">0/5</div><div class="cl-ar">▾</div></div>
+    <div class="clc-body">
+      <div class="clr" onclick="tcl(this,'cc1','cl3')"><div class="cl-ck" id="cc1"></div><div class="cl-tx">Noté dans le journal (actif, direction, résultat)</div></div>
+      <div class="clr" onclick="tcl(this,'cc2','cl3')"><div class="cl-ck" id="cc2"></div><div class="cl-tx">Analysé pourquoi gagné ou perdu</div></div>
+      <div class="clr" onclick="tcl(this,'cc3','cl3')"><div class="cl-ck" id="cc3"></div><div class="cl-tx">Noté mes émotions pendant le trade</div></div>
+      <div class="clr" onclick="tcl(this,'cc4','cl3')"><div class="cl-ck" id="cc4"></div><div class="cl-tx">Si perte : pause 30 min avant le suivant</div></div>
+      <div class="clr" onclick="tcl(this,'cc5','cl3')"><div class="cl-ck" id="cc5"></div><div class="cl-tx">Vérifié si perte journalière max atteinte</div></div>
+    </div>
+  </div>
+  <div class="sh">Bilan hebdomadaire</div>
+  <div class="clc" id="cl4">
+    <div class="clc-h" onclick="tc('cl4')"><div class="cl-ic">📅</div><div class="cl-t">Fin de semaine</div><div class="cl-pg" id="cl4p">0/5</div><div class="cl-ar">▾</div></div>
+    <div class="clc-body">
+      <div class="clr" onclick="tcl(this,'cd1','cl4')"><div class="cl-ck" id="cd1"></div><div class="cl-tx">Relu tous les trades de la semaine</div></div>
+      <div class="clr" onclick="tcl(this,'cd2','cl4')"><div class="cl-ck" id="cd2"></div><div class="cl-tx">Calculé mon taux de réussite</div></div>
+      <div class="clr" onclick="tcl(this,'cd3','cl4')"><div class="cl-ck" id="cd3"></div><div class="cl-tx">Identifié les erreurs récurrentes</div></div>
+      <div class="clr" onclick="tcl(this,'cd4','cl4')"><div class="cl-ck" id="cd4"></div><div class="cl-tx">Vérifié le respect de ma stratégie</div></div>
+      <div class="clr" onclick="tcl(this,'cd5','cl4')"><div class="cl-ck" id="cd5"></div><div class="cl-tx">Calendrier éco de la semaine prochaine consulté</div></div>
+    </div>
+  </div>
+  <div style="height:8px"></div>
+</div>
+
+<!-- CONSEILS -->
+<div class="sc" id="s-tips">
+  <div class="sh">Calculateur de risque</div>
+  <div class="calc">
+    <div class="calc-t">Combien risquer par trade ?</div>
+    <div class="calc-r"><label>Capital (€/$)</label><input type="number" id="cap" value="1000" oninput="cr()"></div>
+    <div class="calc-r"><label>Risque (%)</label><input type="number" id="rsk" value="1" step="0.1" oninput="cr()"></div>
+    <div class="calc-res"><div class="calc-rl">Montant max à risquer</div><div class="calc-rv" id="rr">10.00 €</div></div>
+  </div>
+  <div class="sh">Règles d'or</div>
+  <div class="tip d"><div class="tip-e">🚫</div><div><div class="tip-t">Jamais sans Stop Loss</div><div class="tip-d">Une seule position sans SL peut vider ton compte. Sans exception, sans excuses.</div></div></div>
+  <div class="tip w"><div class="tip-e">🧠</div><div><div class="tip-t">Les émotions sont ton pire ennemi</div><div class="tip-d">FOMO, revenge trading, overtrading : reconnais ces biais avant qu'ils te coûtent cher.</div></div></div>
+  <div class="tip s"><div class="tip-e">📐</div><div><div class="tip-t">R:R plus important que le taux de réussite</div><div class="tip-d">Ratio 1:2 + 40% de gains = rentable. Vise toujours minimum 1:2.</div></div></div>
+  <div class="tip i"><div class="tip-e">🐢</div><div><div class="tip-t">La constance bat la performance</div><div class="tip-d">+2% par mois régulier vaut mieux que +30% puis -25%. Protège ton capital d'abord.</div></div></div>
+  <div class="tip d"><div class="tip-e">⚡</div><div><div class="tip-t">Le levier amplifie gains ET pertes</div><div class="tip-d">Levier 1:100 → 1% contre toi = 100% de perte. Commence au maximum à 1:10.</div></div></div>
+  <div class="tip w"><div class="tip-e">📚</div><div><div class="tip-t">1 seule stratégie à fond</div><div class="tip-d">Les pros maîtrisent une stratégie dans toutes les conditions. Stick with it 3 mois min.</div></div></div>
+  <div class="tip s"><div class="tip-e">🗓️</div><div><div class="tip-t">Calendrier éco obligatoire chaque matin</div><div class="tip-d">NFP, BCE, Fed, CPI : 100+ pips en quelques secondes. Évite 30 min avant/après.</div></div></div>
+  <div class="tip i"><div class="tip-e">⏱️</div><div><div class="tip-t">2-3 mois de démo minimum</div><div class="tip-d">Le réel ajoute une pression psychologique que la démo ne simule pas. Sois patient.</div></div></div>
+  <div style="height:8px"></div>
+</div>
+
+<!-- GLOSSAIRE -->
+<div class="sc" id="s-gl">
+  <div class="sh">Termes essentiels MT5</div>
+  <div class="gl">
+    <div class="gl-c"><div class="gl-t">Pip</div><div class="gl-d">Petite variation de prix. EUR/USD : 1 pip = 0.0001</div></div>
+    <div class="gl-c"><div class="gl-t">Lot</div><div class="gl-d">1 lot = 100k unités. 0.01 = micro-lot (min)</div></div>
+    <div class="gl-c"><div class="gl-t">Spread</div><div class="gl-d">Différence Ask-Bid = coût du trade</div></div>
+    <div class="gl-c"><div class="gl-t">Levier</div><div class="gl-d">1:100 = 100 € contrôle 10 000 €</div></div>
+    <div class="gl-c"><div class="gl-t">Stop Loss</div><div class="gl-d">Clôture auto au niveau de perte défini</div></div>
+    <div class="gl-c"><div class="gl-t">Take Profit</div><div class="gl-d">Clôture auto quand l'objectif est atteint</div></div>
+    <div class="gl-c"><div class="gl-t">Solde</div><div class="gl-d">Capital réel, positions ouvertes non incluses</div></div>
+    <div class="gl-c"><div class="gl-t">Équité</div><div class="gl-d">Solde + P&L flottant des positions ouvertes</div></div>
+    <div class="gl-c"><div class="gl-t">Marge</div><div class="gl-d">Capital bloqué en garantie des positions</div></div>
+    <div class="gl-c"><div class="gl-t">Marge libre</div><div class="gl-d">Capital disponible pour de nouveaux trades</div></div>
+    <div class="gl-c"><div class="gl-t">Long / Buy</div><div class="gl-d">Achat. Profit si le prix monte.</div></div>
+    <div class="gl-c"><div class="gl-t">Short / Sell</div><div class="gl-d">Vente. Profit si le prix baisse.</div></div>
+    <div class="gl-c"><div class="gl-t">Swap</div><div class="gl-d">Frais si position gardée la nuit</div></div>
+    <div class="gl-c"><div class="gl-t">Timeframe</div><div class="gl-d">Durée d'une bougie : M1 M5 H1 H4 D1</div></div>
+    <div class="gl-c"><div class="gl-t">Drawdown</div><div class="gl-d">Perte max depuis un pic de capital</div></div>
+    <div class="gl-c"><div class="gl-t">FOMO</div><div class="gl-d">Entrer un trade par peur de rater</div></div>
+    <div class="gl-c"><div class="gl-t">Volatilité</div><div class="gl-d">Amplitude des mouvements de prix</div></div>
+    <div class="gl-c"><div class="gl-t">NFP</div><div class="gl-d">Emplois US, 1er vendredi du mois. Très volatil.</div></div>
+    <div class="gl-c"><div class="gl-t">R:R Ratio</div><div class="gl-d">Risque/Récompense. 1:2 = risque 10, gagne 20</div></div>
+    <div class="gl-c"><div class="gl-t">Broker</div><div class="gl-d">Intermédiaire régulé entre toi et le marché</div></div>
+  </div>
+  <div style="height:8px"></div>
+</div>
+
+<nav class="nav">
+  <button class="nv on" id="nv-home" onclick="go('home')"><div class="nv-i">🏠</div><div class="nv-l">Accueil</div></button>
+  <button class="nv" id="nv-guide" onclick="go('guide')"><div class="nv-i">📚</div><div class="nv-l">Guide</div></button>
+  <button class="nv" id="nv-cl" onclick="go('cl')"><div class="nv-i">✅</div><div class="nv-l">Checklist</div></button>
+  <button class="nv" id="nv-tips" onclick="go('tips')"><div class="nv-i">💡</div><div class="nv-l">Conseils</div></button>
+  <button class="nv" id="nv-gl" onclick="go('gl')"><div class="nv-i">📖</div><div class="nv-l">Glossaire</div></button>
+</nav>
+</div>
+
+<script>
+const SK='mt5v3s',CK='mt5v3c';
+let SS=JSON.parse(localStorage.getItem(SK)||'{}');
+let CS=JSON.parse(localStorage.getItem(CK)||'{}');
+const ALL=['a1','a2','a3','a4','a5','b1','b2','b3','b4','b5','c1','c2','c3','c4','c5','d1','d2','d3','d4','d5','d6','e1','e2','e3','e4','e5','f1','f2','f3','f4','f5'];
+const CLM={'cl1':['ca1','ca2','ca3','ca4','ca5','ca6','ca7'],'cl2':['cb1','cb2','cb3','cb4','cb5','cb6'],'cl3':['cc1','cc2','cc3','cc4','cc5'],'cl4':['cd1','cd2','cd3','cd4','cd5']};
+let cur='home';
+function go(n){document.getElementById('s-'+cur).classList.remove('on');document.getElementById('nv-'+cur).classList.remove('on');cur=n;document.getElementById('s-'+n).classList.add('on');document.getElementById('nv-'+n).classList.add('on');window.scrollTo(0,0);}
+function tg(id){document.getElementById(id).classList.toggle('op');}
+function tc(id){document.getElementById(id).classList.toggle('op');}
+function ts(btn,id){const d=btn.classList.toggle('dn');const l=document.getElementById(id);if(d){l.classList.add('dn');SS[id]=1;}else{l.classList.remove('dn');delete SS[id];}localStorage.setItem(SK,JSON.stringify(SS));up();}
+function tcl(row,id,card){const c=document.getElementById(id),t=row.querySelector('.cl-tx');const d=c.classList.toggle('dn');if(d){t.classList.add('dn');CS[id]=1;}else{t.classList.remove('dn');delete CS[id];}localStorage.setItem(CK,JSON.stringify(CS));const ids=CLM[card],done=ids.filter(i=>CS[i]).length;document.getElementById(card+'p').textContent=done+'/'+ids.length;}
+function up(){const done=ALL.filter(id=>SS[id]).length,tot=ALL.length;const pct=Math.round(done/tot*100);document.getElementById('pf').style.width=pct+'%';document.getElementById('pv').textContent=done+' / '+tot;document.getElementById('sd').textContent=done;document.getElementById('sp').textContent=pct+'%';}
+function cr(){const c=parseFloat(document.getElementById('cap').value)||0;const r=parseFloat(document.getElementById('rsk').value)||0;document.getElementById('rr').textContent=(c*r/100).toFixed(2)+' €';}
+function init(){ALL.forEach(id=>{if(!SS[id])return;const b=document.querySelector("[onclick*=\"'"+id+"'\"]");if(b)b.classList.add('dn');const l=document.getElementById(id);if(l)l.classList.add('dn');});Object.keys(CLM).forEach(card=>{CLM[card].forEach(id=>{if(!CS[id])return;const el=document.getElementById(id);if(el)el.classList.add('dn');const row=el&&el.closest('.clr');if(row){const t=row.querySelector('.cl-tx');if(t)t.classList.add('dn');}});const ids=CLM[card],done=ids.filter(i=>CS[i]).length;document.getElementById(card+'p').textContent=done+'/'+ids.length;});up();}
+init();
+</script>
+</body>
+</html>
